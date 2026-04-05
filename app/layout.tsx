@@ -12,8 +12,16 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "NUMRA | Luxury Makeup Studio & Salon Lahore",
-  description: "Exclusive bridal makeup and beauty sanctuary in Lahore. Elevating natural beauty with precision and panache.",
+  title: "Makeup Launch | Luxury Bridal Studio & Wedding Artistry Rawalpindi",
+  description: "Rawalpindi's premier sanctuary for luxury bridal transformations, couture hair, and precision nail artistry. Defining elegance in the Twin Cities.",
+  keywords: [
+    "Bridal Makeup Rawalpindi", 
+    "Best Wedding Salon Rawalpindi", 
+    "Luxury Salon Bahria Town", 
+    "Nail Art Rawalpindi", 
+    "Makeup Launch Studio",
+    "Bridal Services Islamabad"
+  ],
 };
 
 export default function RootLayout({
