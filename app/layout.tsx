@@ -11,17 +11,27 @@ const cormorant = Cormorant_Garamond({
   weight: ['300', '400', '500', '600', '700'] 
 });
 
+
+
 export const metadata: Metadata = {
-  title: "Makeup Launch | Luxury Bridal Studio & Wedding Artistry Rawalpindi",
-  description: "Rawalpindi's premier sanctuary for luxury bridal transformations, couture hair, and precision nail artistry. Defining elegance in the Twin Cities.",
+  title: "Aasiya's Lounge | Luxury Beauty, Wellness & Bridal Studio Islamabad",
+  description: "Islamabad's premier sanctuary for luxury bridal transformations, bespoke hair color, and precision wellness rituals. Defining elegance at F10/2, Idrees Market.",
   keywords: [
-    "Bridal Makeup Rawalpindi", 
-    "Best Wedding Salon Rawalpindi", 
-    "Luxury Salon Bahria Town", 
-    "Nail Art Rawalpindi", 
-    "Makeup Launch Studio",
-    "Bridal Services Islamabad"
+    "Aasiya's Lounge",
+    "Luxury Salon Islamabad", 
+    "Bridal Makeup Islamabad", 
+    "Best Beauty Studio F10", 
+    "Premium Hair Salon Islamabad", 
+    "Luxury Skincare & Spa Pakistan"
   ],
+  openGraph: {
+    title: "Aasiya's Lounge | Luxury Beauty & Wellness",
+    description: "Experience the art of radiance. Premium bridal artistry, hair treatments, and wellness in Islamabad.",
+    url: 'https://aasiyaslounge.com',
+    siteName: "Aasiya's Lounge",
+    locale: 'en_PK',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
