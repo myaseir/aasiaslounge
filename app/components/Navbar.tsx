@@ -1,171 +1,172 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
-export default function Navbar() {
+/**
+ * Aasiya’s Lounge - Refined Side-Drawer Navbar
+ * Design: High-end Minimalist / Side-Drawer Navigation
+ * Focus: Mobile usability, subtle dimming, and left-aligned typography.
+ */
+
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  // Handle scroll detection for background transitions
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const closeMenu = () => setIsOpen(false);
-  const isActive = (path: string) => pathname === path;
+  // Prevent background scrolling when drawer is active
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isOpen]);
 
-  const menuLinks = [
-    { href: "/bridal", label: "The Bridal Edit" },
-    { href: "/services", label: "Our Services" },
-    { href: "/about", label: "Our Story" },
-    { href: "/contact", label: "Get in touch" },
+  const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Services', href: '/services' },
+    { name: 'Bridal', href: '/bridal' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
     <>
-      <nav 
-        className={`fixed w-full z-[130] transition-all duration-700 ${
-          scrolled || isOpen
-            ? "bg-white/95 backdrop-blur-md py-4 border-b border-zinc-100 shadow-sm" 
-            : "bg-transparent py-8"
+      <nav
+        className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ease-in-out ${
+          isScrolled 
+            ? 'bg-white/90 backdrop-blur-md border-b border-[#F5F1EE]' 
+            : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex justify-between items-center h-10">
-            
-            {/* Desktop Left */}
-            <div className="hidden md:flex gap-10 items-center flex-1">
-              <Link 
-                href="/bridal" 
-                className={`text-[10px] tracking-[0.3em] uppercase transition-colors ${
-                  isActive("/bridal") ? "font-bold text-zinc-900" : "font-semibold text-zinc-500 hover:text-zinc-900"
-                }`}
-              >
-                The Bridal Edit
-              </Link>
-              <Link 
-                href="/services" 
-                className={`text-[10px] tracking-[0.3em] uppercase transition-colors ${
-                  isActive("/services") ? "font-bold text-zinc-900" : "font-semibold text-zinc-500 hover:text-zinc-900"
-                }`}
-              >
-                Services
-              </Link>
-            </div>
+        <div className="max-w-7xl mx-auto px-5 md:px-10 h-[64px] flex items-center justify-between">
+          
+          {/* Left: Hamburger (Mobile Only) */}
+          <div className="flex items-center flex-1 lg:hidden">
+            <button
+              onClick={() => setIsOpen(true)}
+              className="p-1 -ml-1 text-[#1a1a1a] transition-opacity hover:opacity-60"
+              aria-label="Open navigation menu"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+              </svg>
+            </button>
+          </div>
 
-            {/* Central Logo */}
-            <div className="flex-shrink-0 z-[140]">
-              <Link 
-                href="/" 
-                onClick={closeMenu}
-                className="text-xl md:text-3xl font-serif tracking-[-0.05em] text-zinc-900 transition-opacity hover:opacity-80 uppercase italic"
-              >
-                Makeup Launch
-              </Link>
-            </div>
+          {/* Desktop Brand Section */}
+          <div className="hidden lg:flex items-center flex-1">
+            <Link href="/" className="group">
+              <span className="text-lg font-serif tracking-[0.2em] uppercase text-[#1a1a1a] transition-colors group-hover:text-[#968478]">
+                Aasiya’s Lounge
+              </span>
+            </Link>
+          </div>
 
-            {/* Desktop Right */}
-            <div className="hidden md:flex gap-10 items-center justify-end flex-1">
-              <Link 
-                href="/about" 
-                className={`text-[10px] tracking-[0.3em] uppercase transition-colors ${
-                  isActive("/about") ? "font-bold text-zinc-900" : "font-semibold text-zinc-500 hover:text-zinc-900"
-                }`}
-              >
-                Our Story
-              </Link>
-              <Link 
-                href="https://wa.me/923175656799" 
-                className="px-8 py-3 bg-zinc-900 text-white text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-rose-950 transition-all duration-500 shadow-lg"
-              >
-                Book My Date
-              </Link>
-            </div>
+          {/* Mobile Brand Section (Centered) */}
+          <div className="flex lg:hidden justify-center items-center flex-grow">
+            <Link href="/" className="text-[14px] font-serif tracking-[0.25em] uppercase text-[#1a1a1a]">
+              Aasiya’s Lounge
+            </Link>
+          </div>
 
-            {/* Mobile Toggle Button - The Cross Icon */}
-            <div className="md:hidden flex items-center z-[140]">
-              <button 
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-zinc-900 focus:outline-none p-2 relative"
-                aria-label={isOpen ? "Close Menu" : "Open Menu"}
+          {/* Desktop Menu Links */}
+          <div className="hidden lg:flex items-center justify-center space-x-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-[11px] tracking-[0.2em] uppercase text-[#444] transition-opacity hover:opacity-50"
               >
-                <div className="w-6 flex flex-col items-end gap-1.5">
-                  <span className={`h-[1px] bg-zinc-900 transition-all duration-500 ease-in-out ${
-                    isOpen ? "w-6 rotate-45 translate-y-[7px]" : "w-6"
-                  }`}></span>
-                  <span className={`h-[1px] bg-zinc-900 transition-all duration-300 ${
-                    isOpen ? "opacity-0" : "w-4"
-                  }`}></span>
-                  <span className={`h-[1px] bg-zinc-900 transition-all duration-500 ease-in-out ${
-                    isOpen ? "w-6 -rotate-45 -translate-y-[7px]" : "w-5"
-                  }`}></span>
-                </div>
-              </button>
-            </div>
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right: Book CTA */}
+          <div className="flex items-center justify-end flex-1">
+            <Link
+              href="/book"
+              className="px-5 py-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase font-medium bg-[#F5F1EE] text-[#4A3F35] rounded-full transition-all duration-300 active:scale-[0.97] hover:bg-[#EBE4DE]"
+            >
+              Book
+            </Link>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      <div 
-        className={`fixed inset-0 z-[120] md:hidden transition-all duration-700 ease-in-out bg-white ${
-          isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
-        }`}
-      >
-        <div className="relative h-full flex flex-col items-center justify-center px-10">
-          
-          <div className="mb-12 flex flex-col items-center gap-4 transition-all duration-700 delay-100">
-            <span className="text-rose-900/40 text-[9px] tracking-[0.5em] uppercase font-bold">Welcome</span>
-            <div className="w-px h-10 bg-zinc-100"></div>
+      {/* Side Drawer Component */}
+      <div className="relative z-[60]">
+        {/* Dim Overlay */}
+        <div
+          className={`fixed inset-0 bg-black/20 backdrop-blur-[2px] transition-opacity duration-500 ease-in-out ${
+            isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+          }`}
+          onClick={() => setIsOpen(false)}
+        />
+
+        {/* 75% Width Side Drawer */}
+        <div
+          className={`fixed top-0 left-0 h-full w-[75%] max-w-[320px] bg-[#FAF9F8] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+            isOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          {/* Drawer Header */}
+          <div className="h-[64px] px-6 flex items-center justify-between border-b border-[#F5F1EE]">
+            <span className="text-[11px] tracking-[0.2em] uppercase font-medium text-[#968478]">Navigation</span>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-1 text-[#222] transition-opacity hover:opacity-60"
+              aria-label="Close menu"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
           </div>
 
-          <nav className="flex flex-col gap-10 items-center">
-            {menuLinks.map((item, index) => (
-              <div 
-                key={index} 
-                className="relative flex flex-col items-center"
-                style={{ 
-                  transitionDelay: `${200 + index * 100}ms`, 
-                  transform: isOpen ? 'translateY(0)' : 'translateY(20px)', 
-                  opacity: isOpen ? 1 : 0,
-                  transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)'
-                }}
+          {/* Left-Aligned Menu Items */}
+          <div className="flex flex-col pt-8 px-8 space-y-7">
+            {navLinks.map((link, i) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`text-lg font-serif text-[#1a1a1a] transition-all duration-500 delay-[${i * 40}ms] ${
+                  isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
+                }`}
               >
-                <Link 
-                  href={item.href} 
-                  onClick={closeMenu} 
-                  className={`text-2xl font-serif italic tracking-wide antialiased transition-all duration-500 ${
-                    isActive(item.href) ? "text-rose-950 scale-110" : "text-zinc-400 font-light"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-                {/* Cute underline for active state */}
-                <div className={`h-px bg-rose-900/30 transition-all duration-700 mt-1 ${isActive(item.href) ? "w-full" : "w-0"}`}></div>
-              </div>
+                {link.name}
+              </Link>
             ))}
-          </nav>
+          </div>
 
-          <div className={`mt-20 w-full max-w-[240px] transition-all duration-1000 delay-600 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
-            <a 
-              href="https://wa.me/923175656799" 
-              onClick={closeMenu}
-              className="flex items-center justify-center w-full py-4 bg-zinc-950 text-white text-[10px] tracking-[0.4em] uppercase font-bold shadow-xl active:scale-95 transition-all"
-            >
-              Reserve My Date
-            </a>
-            <p className="mt-8 text-[8px] tracking-[0.3em] uppercase text-zinc-300 text-center">
-              Bahria Town • Rawalpindi
-            </p>
+          {/* Drawer Footer Info */}
+          <div className="absolute bottom-10 left-8">
+            <div className="flex flex-col space-y-1">
+              <span className="text-[9px] tracking-[0.3em] uppercase text-[#968478] opacity-60">
+                Aasiya’s Lounge
+              </span>
+              <span className="text-[9px] tracking-[0.1em] text-[#968478] opacity-40">
+                Premium Beauty & Wellness
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
+
+export default Navbar;

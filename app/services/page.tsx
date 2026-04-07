@@ -1,171 +1,403 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
+/**
+ * Aasiya’s Lounge - Premium Services Menu
+ * Design: High-end Spa / Editorial Menu Aesthetic
+ * Focus: Typography, precise alignment, luxury whitespace.
+ */
 
 export default function ServicesPage() {
-  const WHATSAPP_LINK = "https://wa.me/923175656799";
+  const [activeSection, setActiveSection] = useState('makeup');
 
-  // Rebranded categories for Makeup Launch
-  const serviceCategories = [
-    {
-      category: "The Bridal Studio",
-      tagline: "Bridal mastery focused on your most precious moments.",
-      image: "https://images.unsplash.com/photo-1733937110329-7bfb323fc567?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      services: [
-        { name: "Traditional Barat", detail: "Majestic, high-definition bridal transformations." },
-        { name: "Nikah & Engagement", detail: "Soft, luminous looks focused on natural glow." },
-        { name: "Reception Glam", detail: "Contemporary, high-fashion artistry for the final walk." },
-        { name: "Bridal Consultations", detail: "One-on-one sessions to map your perfect wedding look." }
-      ]
-    },
-    {
-      category: "Hair & Nail Art",
-      tagline: "Couture styling and precision finishing.",
-      image: "https://images.unsplash.com/photo-1549236177-f9b0031756eb?q=80&w=386&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      services: [
-        { name: "Luxury Nail Art", detail: "Acrylics, gel extensions, and bespoke hand-painted designs." },
-        { name: "Couture Styling", detail: "From silk presses to intricate wedding updos." },
-        { name: "Technical Colour", detail: "Expert balayage and corrective color treatments." },
-        { name: "Manicure & Pedicure", detail: "Spiritual relaxation for hands and feet." }
-      ]
-    },
-    {
-      category: "The Spa Retreat",
-      tagline: "A sanctuary for rejuvenation and skin health.",
-      image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1200",
-      services: [
-        { name: "Signature Facials", detail: "Deep cleansing and hydration for a bridal glow." },
-        { name: "Hydra-Refinement", detail: "Advanced skin resurfacing and rejuvenation." },
-        { name: "Body Relaxation", detail: "Therapeutic treatments to melt away wedding stress." },
-        { name: "Glow Essentials", detail: "Meticulous grooming and skin prep services." }
-      ]
-    }
-  ];
+  // Optional: Highlight active section on scroll (simplified for performance)
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = menuData.map(cat => document.getElementById(cat.id));
+      const scrollPosition = window.scrollY + 200; // Offset for sticky headers
+
+      sections.forEach(section => {
+        if (section && section.offsetTop <= scrollPosition && section.offsetTop + section.offsetHeight > scrollPosition) {
+          setActiveSection(section.id);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <main className="min-h-screen bg-white">
-      
-      {/* 1. Header Section */}
-      <section className="pt-32 pb-20 md:pt-56 md:pb-40 px-6 text-center max-w-6xl mx-auto">
-        <div className="flex flex-col items-center">
-          <span className="text-rose-900 text-[10px] md:text-xs tracking-[0.8em] font-bold uppercase mb-8 block">
-            The Luxury Suite
-          </span>
-          <h1 className="text-6xl md:text-9xl font-serif text-zinc-900 mb-10 italic tracking-tighter leading-[0.8]">
-            Our <br className="md:hidden" /><span className="text-rose-950 md:pl-16">Services.</span>
-          </h1>
-          <div className="w-16 h-px bg-zinc-200 mb-10"></div>
-          <p className="text-zinc-500 font-light leading-relaxed text-base md:text-xl max-w-2xl mx-auto italic">
-            "At Makeup Launch, we offer a curated selection of beauty rituals designed for the modern bride and the woman of style."
-          </p>
-        </div>
+    <main className="min-h-screen bg-[#FAF9F6] text-[#1C1917] antialiased selection:bg-[#E8E4DF]">
+      <Navbar />
+
+      {/* Editorial Hero Section */}
+      <section className="pt-32 pb-16 px-6 md:px-12 max-w-4xl mx-auto text-center">
+        <span className="text-[10px] tracking-[0.4em] uppercase text-[#968478] font-bold block mb-6">
+          The Treatment Menu
+        </span>
+        <h1 className="text-5xl md:text-7xl font-serif leading-none mb-6 text-[#1C1917]">
+          Curated <span className="italic font-light text-[#968478]">Rituals</span>
+        </h1>
+        <p className="max-w-xl mx-auto text-[13px] md:text-sm text-[#5C5A57] font-light leading-relaxed">
+          A comprehensive selection of premium treatments designed to elevate your natural beauty. 
+          Performed with precision, using the industry's finest products.
+        </p>
       </section>
 
-      {/* 2. Alternating Editorial Layout */}
-      <section className="py-20 md:py-32 px-4 md:px-12 max-w-[1400px] mx-auto">
-        <div className="flex flex-col gap-40 md:gap-64">
-          
-          {serviceCategories.map((cat, index) => (
-            <div 
-              key={index} 
-              className={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-16 lg:gap-32 items-center`}
+      {/* Mobile Sticky Navigation (Visible only on small screens) */}
+      <nav className="lg:hidden sticky top-[64px] z-40 bg-[#FAF9F6]/95 backdrop-blur-md border-y border-[#E8E4DF] overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex px-6 py-4 space-x-8 min-w-max">
+          {menuData.map((cat) => (
+            <a
+              key={cat.id}
+              href={`#${cat.id}`}
+              className={`text-[10px] uppercase tracking-[0.25em] font-medium transition-colors ${
+                activeSection === cat.id ? 'text-[#1C1917] border-b border-[#1C1917] pb-1' : 'text-[#A3A19E] hover:text-[#1C1917]'
+              }`}
             >
-              
-              {/* Image Side */}
-              <div className="w-full lg:w-1/2">
-                <div className="relative aspect-[3/4] md:aspect-[4/5] w-full overflow-hidden bg-zinc-50 shadow-2xl group">
-                  <img 
-                    src={cat.image} 
-                    alt={cat.category} 
-                    className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-[1.5s] ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-rose-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                </div>
-              </div>
+              {cat.title}
+            </a>
+          ))}
+        </div>
+      </nav>
 
-              {/* Text Side */}
-              <div className="w-full lg:w-1/2 flex flex-col">
-                <span className="text-zinc-300 text-6xl md:text-8xl font-serif mb-6 opacity-30">0{index + 1}</span>
-                <h2 className="text-4xl md:text-6xl font-serif text-zinc-900 mb-4 italic tracking-tight">
-                  {cat.category}
+      {/* Main Layout: Sidebar + Content */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-24 flex flex-col lg:flex-row gap-16 lg:gap-24 relative">
+        
+        {/* Desktop Sticky Sidebar */}
+        <aside className="hidden lg:block w-1/4 shrink-0">
+          <div className="sticky top-32 space-y-6 border-l border-[#E8E4DF] pl-8">
+            {menuData.map((cat) => (
+              <div key={cat.id}>
+                <a
+                  href={`#${cat.id}`}
+                  className={`text-[11px] uppercase tracking-[0.25em] transition-all duration-300 block ${
+                    activeSection === cat.id 
+                      ? 'text-[#1C1917] font-bold translate-x-2' 
+                      : 'text-[#968478] font-medium hover:text-[#1C1917]'
+                  }`}
+                >
+                  {cat.title}
+                </a>
+              </div>
+            ))}
+          </div>
+        </aside>
+
+        {/* Menu Content */}
+        <div className="w-full lg:w-3/4 space-y-32">
+          {menuData.map((category) => (
+            <div key={category.id} id={category.id} className="scroll-mt-32 md:scroll-mt-40">
+              
+              {/* Category Header */}
+              <div className="mb-16 text-center lg:text-left">
+                <h2 className="text-4xl md:text-5xl font-serif text-[#1C1917] mb-3">
+                  {category.title}
                 </h2>
-                <p className="text-rose-900 text-[10px] md:text-[11px] tracking-[0.4em] uppercase font-bold mb-12">
-                  {cat.tagline}
-                </p>
-                
-                {/* Menu Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
-                  {cat.services.map((item, idx) => (
-                    <div key={idx} className="group border-b border-zinc-100 pb-8 hover:border-rose-900 transition-all duration-500">
-                      <h3 className="text-lg font-serif text-zinc-900 mb-2 italic">
-                        {item.name}
-                      </h3>
-                      <p className="text-zinc-500 font-light text-sm leading-loose">
-                        {item.detail}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-16">
-                  <a 
-                    href={WHATSAPP_LINK}
-                    className="inline-flex items-center text-zinc-900 text-[10px] tracking-[0.5em] uppercase font-bold group"
-                  >
-                    Inquire via WhatsApp
-                    <span className="ml-6 h-px w-12 bg-rose-900 group-hover:w-24 transition-all duration-700"></span>
-                  </a>
-                </div>
+                {category.subtitle && (
+                  <p className="text-[11px] uppercase tracking-[0.3em] text-[#968478] font-medium">
+                    {category.subtitle}
+                  </p>
+                )}
               </div>
-              
+
+              {/* Sections (e.g., Barat, Balayage) */}
+              <div className="space-y-16">
+                {category.sections.map((section, sIdx) => (
+                  <div key={sIdx}>
+                    
+                    {/* Section Header */}
+                    {section.title && (
+                      <div className="mb-8 border-b border-[#E8E4DF] pb-3">
+                        <h3 className="text-[12px] md:text-[13px] font-bold tracking-[0.25em] uppercase text-[#1C1917]">
+                          {section.title}
+                        </h3>
+                        {section.note && (
+                          <p className="text-[11px] text-[#968478] mt-2 italic font-light tracking-wide">
+                            * {section.note}
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Menu Items List - Premium Dotted Layout */}
+                    <div className="space-y-5">
+                      {section.items.map((item, iIdx) => (
+                        <div key={iIdx} className="flex items-baseline justify-between group">
+                          {/* Item Name */}
+                          <div className="flex-none pr-4 md:pr-6">
+                            <span className="text-[14px] md:text-[15px] font-medium text-[#1C1917] group-hover:text-[#968478] transition-colors">
+                              {item.name}
+                            </span>
+                          </div>
+                          
+                          {/* Dotted Line */}
+                          <div className="flex-grow border-b-2 border-dotted border-[#E8E4DF] opacity-60 relative top-[-4px] group-hover:border-[#968478] transition-colors"></div>
+                          
+                          {/* Price */}
+                          <div className="flex-none pl-4 md:pl-6">
+                            <span className="text-[12px] md:text-[13px] font-medium text-[#5C5A57] whitespace-nowrap">
+                              Rs. {item.price}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
-
         </div>
       </section>
 
-      {/* 3. Footer Booking Section */}
-      <section className="bg-zinc-950 py-32 md:py-48 px-6 text-center relative overflow-hidden">
-         {/* Subtle background text */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[25vw] font-serif italic text-white/[0.03] pointer-events-none select-none">
-            Glamour
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-7xl font-serif text-white mb-8 italic tracking-tighter">
-            Ready to Begin?
-          </h2>
-          <p className="text-zinc-400 font-light mb-12 text-sm md:text-lg tracking-widest uppercase opacity-70">
-            Book your bridal date or a luxury session today.
-          </p>
-          
-          <div className="flex flex-col items-center gap-12">
-            <a 
-              href={WHATSAPP_LINK}
-              className="px-16 py-6 bg-white text-zinc-950 text-[11px] tracking-[0.5em] uppercase font-bold hover:bg-rose-900 hover:text-white transition-all duration-500 shadow-2xl"
-            >
-              Reserve Your Appointment
-            </a>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-white/50 text-[10px] tracking-[0.3em] uppercase font-bold pt-12 border-t border-white/10 w-full">
-                <div className="flex flex-col gap-2">
-                    <span className="text-rose-900">Direct Call</span>
-                    <span className="text-white text-base font-medium tracking-normal">0317-5656799</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                    <span className="text-rose-900">Inquiries</span>
-                    <span className="text-white text-base font-medium tracking-normal">0315-1505838</span>
-                </div>
-            </div>
-          </div>
-        </div>
+      {/* Footer Booking Section */}
+      <section className="py-24 border-t border-[#E8E4DF] bg-[#F3EFEA] text-center mt-12">
+        <h2 className="text-3xl font-serif text-[#1C1917] mb-8">Experience the Elegance</h2>
+        <Link 
+          href="/book"
+          className="inline-block px-10 py-4 bg-[#1C1917] text-white text-[11px] uppercase tracking-[0.25em] font-bold hover:bg-[#968478] hover:shadow-xl transition-all duration-300"
+        >
+          Book Your Appointment
+        </Link>
       </section>
 
-      {/* 4. Software House Note */}
-      <div className="py-12 text-center bg-zinc-950 border-t border-white/5">
-        <p className="text-[9px] tracking-[0.5em] uppercase text-zinc-600">
-          Digital Presence by <span className="text-white font-semibold">Glacia Labs</span>
-        </p>
-      </div>
-      
+    
     </main>
   );
 }
+
+/* ==================================================================
+   FULL MENU DATA 
+   (Exact transcription from provided images, properly categorized)
+================================================================== */
+
+const menuData = [
+  {
+    id: 'makeup',
+    title: 'Makeups',
+    subtitle: 'Flawless, Timeless, Picture-Perfect',
+    sections: [
+      {
+        title: 'Barat',
+        note: 'Includes 6 Services: Full Body Wax, Facial, Manicure, Pedicure, Eyebrows & Face Wax',
+        items: [
+          { name: 'Signature Panel', price: '55,000/-' },
+          { name: 'Senior Panel', price: '45,000/-' },
+        ]
+      },
+      {
+        title: 'Walima',
+        items: [
+          { name: 'Signature Panel', price: '45,000/-' },
+          { name: 'Senior Panel', price: '38,000/-' },
+        ]
+      },
+      {
+        title: 'Nikkah & Engagement',
+        items: [
+          { name: 'Signature Panel', price: '35,000/-' },
+          { name: 'Senior Panel', price: '30,000/-' },
+        ]
+      },
+      {
+        title: 'Party Makeup',
+        items: [
+          { name: 'Signature Party Makeup', price: '7,000/-' },
+          { name: 'Glowy Party Makeup', price: '6,000/-' },
+          { name: 'Simple Party Makeup', price: '5,000/-' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'hair-color',
+    title: 'Signature Hair Coloring',
+    subtitle: 'Luxury, Vibrance, Radiance',
+    sections: [
+      {
+        title: 'Global Dye',
+        items: [
+          { name: 'Short (Starting From)', price: '15,000/-' },
+          { name: 'Medium (Starting From)', price: '18,000/-' },
+          { name: 'Long (Starting From)', price: '25,000/-' },
+        ]
+      },
+      {
+        title: 'Balayage',
+        items: [
+          { name: 'Short (Starting From)', price: '15,000/-' },
+          { name: 'Medium (Starting From)', price: '25,000/-' },
+          { name: 'Long (Starting From)', price: '30,000/-' },
+        ]
+      },
+      {
+        title: 'Highlights / Lowlights',
+        items: [
+          { name: 'Short (Starting From)', price: '20,000/-' },
+          { name: 'Medium (Starting From)', price: '25,000/-' },
+          { name: 'Long (Starting From)', price: '30,000/-' },
+        ]
+      },
+      {
+        title: 'Root Touch Up',
+        note: 'Includes wash & Paddle Brush Dry',
+        items: [
+          { name: 'Roots Touch up 1 Inch', price: '4,500/-' },
+          { name: 'Roots Touch up 2 Inch', price: '6,000/-' },
+          { name: 'Roots Touch Half Head', price: '8,000/-' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'hair-treatments',
+    title: 'Signature Hair Treatments',
+    subtitle: 'With Consultation',
+    sections: [
+      {
+        title: 'Simple Protein Treatment',
+        items: [
+          { name: 'Short (Starting From)', price: '2,000/-' },
+          { name: 'Medium (Starting From)', price: '2,500/-' },
+          { name: 'Long (Starting From)', price: '3,000/-' },
+        ]
+      },
+      {
+        title: 'Brazilian Keratin Treatment',
+        items: [
+          { name: 'Short (Starting From)', price: '16,000/-' },
+          { name: 'Medium (Starting From)', price: '22,000/-' },
+          { name: 'Long (Starting From)', price: '25,000/-' },
+        ]
+      },
+      {
+        title: 'Nanoplastia Treatment',
+        items: [
+          { name: 'Short (Starting From)', price: '15,000/-' },
+          { name: 'Medium (Starting From)', price: '20,000/-' },
+          { name: 'Long (Starting From)', price: '25,000/-' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'hair-cut',
+    title: 'Signature Hair Cut',
+    subtitle: '& Blow Dry Collection',
+    sections: [
+      {
+        title: 'Signature Combo',
+        items: [
+          { name: 'Signature Hair Cut + Inward Blow Dry', price: '5,000/-' },
+          { name: 'Signature Hair Cut + Outward Blow Dry', price: '5,500/-' },
+        ]
+      },
+      {
+        title: 'Senior Artist Combo',
+        items: [
+          { name: 'Hair Cutting by Senior Artist + Inward', price: '4,000/-' },
+          { name: 'Hair Cutting by Senior Artist + Outward', price: '4,500/-' },
+        ]
+      },
+      {
+        title: 'Inward Blow Dry',
+        items: [
+          { name: 'Short', price: '1,800/-' },
+          { name: 'Shoulder Length', price: '2,000/-' },
+          { name: 'Medium', price: '2,200/-' },
+          { name: 'Long', price: '2,500/-' },
+        ]
+      },
+      {
+        title: 'Outward Blow Dry',
+        items: [
+          { name: 'Short', price: '2,000/-' },
+          { name: 'Shoulder Length', price: '2,200/-' },
+          { name: 'Medium', price: '2,500/-' },
+          { name: 'Long', price: '3,000/-' },
+        ]
+      },
+      {
+        title: 'Add On Services',
+        items: [
+          { name: 'Trimming', price: '2,500/-' },
+          { name: 'Flick Cutting', price: '1,500/-' },
+          { name: 'Baby Cut', price: '2,000/-' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'facials',
+    title: 'Facials',
+    subtitle: 'Revitalize & Rejuvenate',
+    sections: [
+      {
+        title: 'Luxury Skin Care',
+        items: [
+          { name: 'Hydra Facial', price: '6,500/-' },
+          { name: 'Deep Hydration', price: '6,000/-' },
+          { name: 'Korean Glass', price: '6,000/-' },
+          { name: 'Gold Facial', price: '5,500/-' },
+          { name: 'Classic Facial', price: '4,000/-' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'mani-pedi',
+    title: 'Luxury Manicure & Pedicure',
+    subtitle: 'All Process include Hand & Feet Massage',
+    sections: [
+      {
+        title: 'Nail & Skin Care',
+        items: [
+          { name: 'Dr. meinaier', price: '5,500/-' },
+          { name: 'Spa Turkish', price: '5,000/-' },
+          { name: 'Aroma', price: '4,500/-' },
+          { name: 'Conatural', price: '4,000/-' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'waxing',
+    title: 'Luxury Waxing',
+    subtitle: 'Silk, Smooth, Superior Elegance',
+    sections: [
+      {
+        title: 'Body Waxing',
+        items: [
+          { name: 'Full Body Wax (Fruit Wax)', price: '8,000/-' },
+          { name: 'Full Arms', price: '2,500/-' },
+          { name: 'Half Arms', price: '1,500/-' },
+          { name: 'Full Legs', price: '2,500/-' },
+          { name: 'Half Legs', price: '1,800/-' },
+          { name: 'Full Front', price: '2,000/-' },
+          { name: 'Full Back', price: '2,200/-' },
+          { name: 'Under Legs', price: '1,800/-' },
+          { name: 'Belly', price: '1,200/-' },
+          { name: 'Under Arms', price: '800/-' },
+        ]
+      },
+      {
+        title: 'Face Waxing & Threading',
+        items: [
+          { name: 'Full Face Wax', price: '1,500/-' },
+          { name: 'Chin Area Wax', price: '500/-' },
+          { name: 'Eyebrows Wax', price: '500/-' },
+          { name: 'Upper Lips Wax', price: '300/-' },
+          { name: 'Full Face Threading', price: '1,500/-' },
+          { name: 'Eyebrows Threading', price: '400/-' },
+          { name: 'Upper Lips Threading', price: '300/-' },
+        ]
+      }
+    ]
+  }
+];

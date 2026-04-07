@@ -1,92 +1,132 @@
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
-export default function Footer() {
+/**
+ * Aasiya’s Lounge - Minimalist Luxury Footer
+ * Design: High-end Boutique / Typography-focused
+ * Focus: Breathing space, left-aligned mobile layout, and muted premium tones.
+ */
+
+const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Services', href: '/services' },
+    { name: 'Bridal', href: '/bridal' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+  ];
+
   return (
-    <footer className="bg-zinc-950 text-zinc-400 py-24 md:py-32 border-t border-zinc-900">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-8">
-        
-        {/* Brand Column */}
-        <div className="md:col-span-5 flex flex-col items-start">
-          <h3 className="text-3xl md:text-4xl font-serif text-white italic mb-8 tracking-tighter uppercase">
-            Makeup Launch
-          </h3>
-          <p className="text-[10px] leading-loose font-light tracking-[0.2em] max-w-sm uppercase opacity-60">
-            Rawalpindi's premier sanctuary for luxury bridal transformations and wellness rituals. 
-            Defining the standard of elegance in the Twin Cities.
-          </p>
+    <footer className="bg-[#f8f6f2] text-[#333333] pt-20 pb-10 border-t border-[#ede9e3]">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-y-12 md:gap-x-12">
           
-          <div className="mt-12 flex gap-8 text-[10px] tracking-[0.4em] uppercase font-bold text-white/40">
-            <a href="#" className="hover:text-rose-900 transition-colors">Instagram</a>
-            <a href="#" className="hover:text-rose-900 transition-colors">Facebook</a>
+          {/* Brand & Tagline Section */}
+          <div className="md:col-span-1 flex flex-col space-y-3">
+            <h2 className="text-xl md:text-2xl font-serif tracking-[0.15em] uppercase text-[#1a1a1a]">
+              Aasiya’s Lounge
+            </h2>
+            <p className="text-[13px] md:text-sm font-light text-[#7a746e] italic leading-relaxed max-w-[200px]">
+              Silk, Smooth, Superior Elegance
+            </p>
           </div>
-        </div>
-        
-        {/* Navigation Column - Matches Navbar Links */}
-        <div className="md:col-span-2">
-          <h4 className="text-white text-[11px] tracking-[0.3em] uppercase mb-10 font-bold">Explore</h4>
-          <ul className="flex flex-col gap-5 text-[10px] tracking-[0.2em] uppercase font-medium">
-            <li>
-              <Link href="/bridal" className="hover:text-white transition-colors">The Bridal Edit</Link>
-            </li>
-            <li>
-              <Link href="/services" className="hover:text-white transition-colors">The Studio</Link>
-            </li>
-            <li>
-              <Link href="/portfolio" className="hover:text-white transition-colors">Wedding Gallery</Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-white transition-colors">Our Story</Link>
-            </li>
-          </ul>
-        </div>
 
-        {/* Studio Location */}
-        <div className="md:col-span-2">
-          <h4 className="text-white text-[11px] tracking-[0.3em] uppercase mb-10 font-bold">The Studio</h4>
-          <address className="not-italic text-[10px] font-light leading-loose tracking-widest uppercase italic">
-            
-            Rawalpindi, Pakistan
-          </address>
-        </div>
+          {/* Quick Links Section */}
+          <div className="flex flex-col space-y-5">
+            <h3 className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#968478]">Navigation</h3>
+            <ul className="flex flex-col space-y-3">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    href={link.href}
+                    className="text-sm font-light text-[#4a4a4a] transition-opacity duration-300 hover:opacity-50"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Contact/Enquiries */}
-        <div className="md:col-span-3">
-          <h4 className="text-white text-[11px] tracking-[0.3em] uppercase mb-10 font-bold">Book My Date</h4>
-          <div className="flex flex-col gap-6 text-[11px] tracking-widest">
-            <div className="flex flex-col gap-2">
-               <span className="text-[9px] text-rose-900 font-bold uppercase tracking-[0.3em]">Direct Hotlines</span>
-               <a href="tel:03175656799" className="text-white hover:text-rose-900 transition-colors font-medium tracking-normal text-xl">0317-5656799</a>
-               <a href="tel:03151505838" className="text-white hover:text-rose-900 transition-colors font-medium tracking-normal text-xl">0315-1505838</a>
+          {/* Contact & Location Section */}
+          <div className="flex flex-col space-y-5">
+            <h3 className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#968478]">Studio</h3>
+            <div className="flex flex-col space-y-2 text-sm font-light text-[#4a4a4a] leading-relaxed">
+              <p>Idrees Market, F-10/2</p>
+              <p>Islamabad, Pakistan</p>
+              <p className="pt-2">+92 300 0000000</p>
             </div>
-            <div className="pt-4 border-t border-white/5">
-              <a href="mailto:hello@makeuplaunch.com" className="hover:text-rose-900 transition-colors text-[10px] uppercase tracking-[0.2em]">
-                hello@makeuplaunch.com
+          </div>
+
+          {/* Social Links Section */}
+          <div className="flex flex-col space-y-5">
+            <h3 className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#968478]">Connect</h3>
+            <div className="flex items-center space-x-6">
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="transition-all duration-300 hover:opacity-40 hover:scale-105"
+                aria-label="Instagram"
+              >
+                <InstagramIcon />
+              </a>
+              <a 
+                href="https://wa.me/923000000000" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="transition-all duration-300 hover:opacity-40 hover:scale-105"
+                aria-label="WhatsApp"
+              >
+                <WhatsAppIcon />
+              </a>
+              <a 
+                href="https://facebook.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="transition-all duration-300 hover:opacity-40 hover:scale-105"
+                aria-label="Facebook"
+              >
+                <FacebookIcon />
               </a>
             </div>
           </div>
+
         </div>
-      </div>
-      
-      {/* Bottom Copyright Bar */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-24 pt-10 border-t border-zinc-900/50 flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] tracking-[0.3em] uppercase">
-        <div className="text-zinc-600 font-medium">
-          © {currentYear} <span className="text-zinc-500">Makeup Launch</span> Bridal Studio • Est 2026
-        </div>
-        
-        <div className="flex items-center gap-2 text-zinc-600">
-          <span>Crafted by</span>
-          <a 
-            href="https://glacialabs.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-white hover:text-rose-900 transition-all font-bold"
-          >
-            Glacia Labs
-          </a>
+
+        {/* Bottom Bar */}
+        <div className="mt-20 pt-8 border-t border-[#ede9e3]/60 flex flex-col items-start space-y-4">
+          <p className="text-[10px] tracking-[0.1em] text-[#968478] opacity-70 uppercase">
+            © {currentYear} Aasiya’s Lounge. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+// --- Minimal Line Icons (SVG) ---
+
+const InstagramIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
+);
+
+const WhatsAppIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-7.6 8.38 8.38 0 0 1 3.8.9L21 3.5z"></path>
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+  </svg>
+);
+
+export default Footer;
