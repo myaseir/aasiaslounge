@@ -16,6 +16,7 @@ const Footer = () => {
     { name: 'Bridal', href: '/bridal' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
+    { name: 'Digital Menu', href: '/menu' }
   ];
 
   return (

@@ -93,12 +93,12 @@ export default function Home() {
                 where time slows down, and luxury is found in the details. 
               </p>
               <div className="flex justify-center lg:justify-start">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Signature_Placeholder.svg/1200px-Signature_Placeholder.svg.png" 
-                  alt="Founder Signature" 
-                  className="h-12 opacity-60 mix-blend-multiply"
-                />
-              </div>
+  <img 
+    src="/signature.png" 
+    alt="Founder Signature" 
+    className="h-26 opacity-60 mix-blend-multiply"
+  />
+</div>
             </div>
 
           </div>
